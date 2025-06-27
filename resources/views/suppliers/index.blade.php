@@ -29,7 +29,8 @@
             <div class="w-full flex justify-center">
 
                 <a href="{{ route('supplier.create') }}"
-                    class=" bg-[#B5D2AA] rounded text-white text-2xl p-4">Toevoegen</a>
+                    class=" bg-[#B5D2AA] rounded text-white text-2xl p-4">Toevoegen
+                </a>
             </div>
         </section>
 

@@ -33,43 +33,27 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- supplier personal information -->
                         <div class="col-span-1">
-                            <h4 class="text-xl mb-4 font-semibold bg-[#CEEFC1] p-2 rounded">Persoonlijke gegevens</h4>
+                            <h4 class="text-xl mb-4 font-semibold bg-[#CEEFC1] p-2 rounded">Leverancier gegevens</h4>
                             
                             <div class="mb-4">
-                                <label for="firstname" class="block mb-1">Voornaam*</label>
-                                <input type="text" name="firstname" id="firstname" value="{{ old('firstname') }}" required 
+                                <label for="SuppliersName" class="block mb-1">Bedrijfsnaam</label>
+                                <input type="text" name="SuppliersName" id="SuppliersName" value="{{ old('SuppliersName') }}" required 
                                     class="w-full border-gray-300 rounded-md @error('firstname') border-red-500 @enderror">
-                                @error('firstname')
+                                @error('SuppliersName')
                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
                             
                             <div class="mb-4">
-                                <label for="infix" class="block mb-1">Tussenvoegsel</label>
-                                <input type="text" name="infix" id="infix" value="{{ old('infix') }}"
+                                <label for="ContactsPersonName" class="block mb-1">Naam contact persoon</label>
+                                <input type="text" name="ContactsPersonName" id="ContactsPersonName" value="{{ old('ContactsPersonName') }}"
                                     class="w-full border-gray-300 rounded-md @error('infix') border-red-500 @enderror">
-                                @error('infix')
+                                @error('ContactsPersonName')
                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
                             
-                            <div class="mb-4">
-                                <label for="lastname" class="block mb-1">Achternaam*</label>
-                                <input type="text" name="lastname" id="lastname" value="{{ old('lastname') }}" required 
-                                    class="w-full border-gray-300 rounded-md @error('lastname') border-red-500 @enderror">
-                                @error('lastname')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
                             
-                            <div class="mb-4">
-                                <label for="birthdate" class="block mb-1">Geboortedatum*</label>
-                                <input type="date" name="birthdate" id="birthdate" value="{{ old('birthdate') }}" required 
-                                    class="w-full border-gray-300 rounded-md @error('birthdate') border-red-500 @enderror">
-                                @error('birthdate')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
                             
                             <!-- Relation number field removed as it's now auto-generated -->
                         </div>
@@ -166,28 +150,9 @@
                                 </div>
                             </div>
                             
-                            <!-- Optional remarks -->
-                            <div class="mb-4 mt-2">
-                                <label for="remark" class="block mb-1">Opmerkingen</label>
-                                <textarea name="remark" id="remark" rows="3" 
-                                    class="w-full border-gray-300 rounded-md @error('remark') border-red-500 @enderror">{{ old('remark') }}</textarea>
-                                @error('remark')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
                             
-                            <!-- Active status -->
-                            <div class="mb-4 mt-2">
-                                <label class="flex items-center">
-                                    <input type="checkbox" name="isactive" id="isactive" value="1" 
-                                        {{ old('isactive', '1') ? 'checked' : '' }}
-                                        class="rounded border-gray-300 text-green-600 shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50">
-                                    <span class="ml-2">Actieve supplier</span>
-                                </label>
-                                @error('isactive')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
+                            
+                            
                         </div>
                     </div>
                     

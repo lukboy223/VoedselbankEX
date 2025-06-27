@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/leveranciers', [SupplierController::class, 'index'])->name('supplier.index');
-    Route::get('/leveranciers/{id}', [SupplierController::class, 'show'])->name('supplier.show');
+    Route::get('/leveranciers/show/{id}', [SupplierController::class, 'show'])->name('supplier.show');
     Route::get('/leveranciers/create', [SupplierController::class, 'create'])->name('supplier.create');
     Route::post('/leveranciers', [SupplierController::class, 'store'])->name('supplier.store');
     Route::get('/leveranciers/{id}/edit', [SupplierController::class, 'edit'])->name('supplier.edit');

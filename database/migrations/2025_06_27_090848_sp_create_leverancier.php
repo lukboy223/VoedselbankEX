@@ -22,18 +22,19 @@ return new class extends Migration
                 IN Housenumber VARCHAR(10),
                 IN ZipCode VARCHAR(10),
                 IN Place VARCHAR(100),
-                IN Email VARCHAR(255)
+                IN Email VARCHAR(255),
                 IN Password VARCHAR(255)
             )
             BEGIN
-                INSERT INTO Suppliers (SuppliersName, ContactsPersonName, User_id)
-                VALUES (SuppliersName, ContactsPersonName, LAST_INSERT_ID());
 
-                INSERT INTO Contacts (PhoneNumber, Streetname, Housenumber, ZipCode, Place)
-                VALUES (PhoneNumber, Streetname, Housenumber, ZipCode, Place);
-
-                INSERT INTO Users (Email, Password, Name, Contacts_id)
-                VALUES (Email, Password, SuppliersName, LAST_INSERT_ID());
+            INSERT INTO Contacts (PhoneNumber, Streetname, Housenumber, ZipCode, Place)
+            VALUES (PhoneNumber, Streetname, Housenumber, ZipCode, Place);
+            
+            INSERT INTO Users (Email, Password, Name, Contacts_id)
+            VALUES (Email, Password, SuppliersName, LAST_INSERT_ID());
+            
+            INSERT INTO Suppliers (SuppliersName, ContactsPersonName, User_id)
+            VALUES (SuppliersName, ContactsPersonName, LAST_INSERT_ID());
             END
         ');
     }

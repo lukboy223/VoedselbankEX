@@ -64,7 +64,57 @@ class SupplierController extends Controller
 
     public function create()
     {
+       
         //redirect the user to the create page
-        return view('Supplier.create');
+        return view('Suppliers.create');
+    }
+
+    public function store(Request $request) 
+    {
+        //validate the request
+        $request->validate([
+            'SuppliersName' => 'required|string|max:100|min:2|regex:/^[a-zA-Z\s]+$/',
+            'ContactsPersonName' => 'required|string|max:100|regex:/^[a-zA-Z\s]+$/',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'phone' => 'nullable|string|max:10',
+            'street_name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
+            'house_number' => 'required|string|max:10',
+            'addition' => 'nullable|string|max:10|regex:/^[a-zA-Z]+$/',
+            'postal_code' => 'required|string|max:6|min:6',
+            'place' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
+        ]);
+        
+        // Hash the password
+        $hashedPassword = bcrypt($request->password);
+        
+        try {
+            // Call the stored procedure with the updated parameters
+            $result = DB::select('CALL sp_create_leverancier(?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+                $request->SuppliersName,
+                $request->ContactsPersonName,
+                $request->phone,
+                $request->street_name,
+                $request->house_number,
+                $request->postal_code,
+                $request->place,
+                $request->email,
+                $hashedPassword,
+               
+            ]);
+            
+            // Redirect with success message
+            return redirect()->route('supplier.index')
+                ->with('success', "Leverancier succesvol toegevoegd");
+                
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error('Error creating supplier: ' . $e->getMessage());
+            
+            // Redirect back with error message
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Er is een fout opgetreden bij het toevoegen van de leverancier. Probeer het later opnieuw.');
+        }
     }
 }
