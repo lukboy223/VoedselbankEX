@@ -13,8 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-       drop table if exists Allergy;
-       CREATE TABLE Allergy (
+       drop table if exists Allergies;
+       CREATE TABLE Allergies (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255) NOT NULL,
     IsActive BIT NOT NULL DEFAULT 1,
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('allergy');
+        Schema::dropIfExists('Allergies');
     }
 };

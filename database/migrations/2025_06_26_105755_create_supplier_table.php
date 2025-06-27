@@ -14,12 +14,12 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        drop table if exists Supplier;
-        CREATE TABLE Supplier (
+        drop table if exists Suppliers;
+        CREATE TABLE Suppliers (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     User_id INT UNSIGNED NOT NULL,
-    SupplierName VARCHAR(150) NOT NULL UNIQUE,
-    ContactPersonName VARCHAR(150) NOT NULL,
+    SuppliersName VARCHAR(150) NOT NULL UNIQUE,
+    ContactsPersonName VARCHAR(150) NOT NULL,
     IsActive BIT NOT NULL DEFAULT 1,
     Created_at DATETIME(6) NOT NULL DEFAULT NOW(6),
     Updated_at DATETIME(6) NOT NULL DEFAULT NOW(6),
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('supplier');
+        Schema::dropIfExists('Suppliers');
     }
 };

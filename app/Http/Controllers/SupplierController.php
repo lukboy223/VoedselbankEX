@@ -7,7 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class SupplierController extends Controller
+class SuppliersController extends Controller
 {
     public function index(Request $request) {
 
@@ -15,29 +15,29 @@ class SupplierController extends Controller
         $page = $request->input('page', 1);
         $offset = ($page - 1) * $perPage;
 
-        $total = DB::table('students')->count();
+        $total = DB::table('Supplierss')->count();
 
         // try catch looks if the SP exists
         try{
-            $students = DB::select('call sp_read_suppiers(?, ?)', [$perPage, $offset]);
+            $Supplierss = DB::select('call sp_read_suppiers(?, ?)', [$perPage, $offset]);
 
         } catch (\Exception $e) {
             //logs the error in the log
-            Log::error('error reading suppliers: ' . $e->getMessage());
+            Log::error('error reading Supplierss: ' . $e->getMessage());
             //makes an empty array if the SP doesn't exist
-            $students = [];
+            $Supplierss = [];
         }
         
         //paginate
 
-        $students = new LengthAwarePaginator($students, $total, $perPage, $page, [
+        $Supplierss = new LengthAwarePaginator($Supplierss, $total, $perPage, $page, [
             'path' => $request->url(),
             'query' => $request->query(),
         ]);
 
-        //redirect the user to the index page with all the students
+        //redirect the user to the index page with all the Supplierss
        
-        return view('students.index', ['students' => $students]);
+        return view('Supplierss.index', ['Supplierss' => $Supplierss]);
 
     }
 }
