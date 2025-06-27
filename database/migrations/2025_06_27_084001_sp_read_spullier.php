@@ -12,11 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::unprepared('
-        drop procedure if exists sp_read_Suppliers;
-        CREATE PROCEDURE sp_read_Suppliers(
-        IN givLIMIT int, 
-        IN givOFFSET int
+         DB::unprepared('
+        drop procedure if exists sp_read_Supplier;
+        CREATE PROCEDURE sp_read_Supplier(
+        IN SUPid int
         )
         begin
             SELECT 
@@ -24,6 +23,12 @@ return new class extends Migration
             SUP.SuppliersName,
             SUP.ContactsPersonName,
             CON.PhoneNumber,
+            CON.Streetname,
+            CON.Housenumber,
+            CON.Addition,
+            CON.ZipCode,
+            CON.Place,
+            USR.Email,
             max(SHI.DateDelivery) as LastShipmentDate
 
             from Suppliers as SUP
@@ -37,12 +42,10 @@ return new class extends Migration
             left join shipments as SHI
             on SUP.id = SHI.Suppliers_id
 
-            group by SUP.id
+            where SUP.id = SUPid
 
-            ORDER BY SUP.SuppliersName ASC
+            group by SUP.id;
 
-            LIMIT givLIMIT 
-            OFFSET givOFFSET;
         end
 
         ');
