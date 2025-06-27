@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        drop table if exists allergy_product;
+        drop table if exists Storage;
         CREATE TABLE Storage (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Product_id INT UNSIGNED NOT NULL,

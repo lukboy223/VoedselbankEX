@@ -14,7 +14,7 @@ return new class extends Migration
     {
         DB::unprepared('
         drop table if exists allergy_product;
-        CREATE TABLE Allergy_Product (
+        CREATE TABLE allergy_product (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Allergy_id INT UNSIGNED NOT NULL,
     Product_id INT UNSIGNED NOT NULL,
