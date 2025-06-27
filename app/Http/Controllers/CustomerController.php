@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+
 
 class CustomerController extends Controller
 {
@@ -16,13 +18,13 @@ class CustomerController extends Controller
         $offset = ($page - 1) * $perPage;
 
         try {
-            // Totaal aantal actieve klanten ophalen
+            // Tel actieve klanten
             $total = DB::table('Customers')->where('IsActive', 1)->count();
 
-            // Stored procedure aanroepen
+            // Probeer stored procedure uit te voeren
             $customers = DB::select('CALL sp_read_Customers(?, ?)', [$perPage, $offset]);
 
-            // Resultaat omzetten naar een paginator
+            // Zet resultaat om naar paginator
             $customers = new LengthAwarePaginator(
                 $customers,
                 $total,
@@ -33,17 +35,22 @@ class CustomerController extends Controller
                     'query' => $request->query(),
                 ]
             );
-
-            // Teruggeven aan de view
-            return view('customers.index', ['customers' => $customers]);
         } catch (\Exception $e) {
-            // Fout loggen
-            Log::error('Fout bij ophalen van klanten: ' . $e->getMessage());
+            Log::warning('Stored procedure mislukt of bestaat niet: ' . $e->getMessage());
 
-            // Foutmelding tonen
-            return view('customers.index')->withErrors([
-                'general' => 'Er is een fout opgetreden bij het laden van de klanten. Probeer het later opnieuw.'
-            ]);
+            // Geef lege collection terug
+            $customers = new LengthAwarePaginator(
+                collect([]), // lege collectie
+                0, // totaal
+                $perPage,
+                $page,
+                [
+                    'path' => $request->url(),
+                    'query' => $request->query(),
+                ]
+            );
         }
+
+        return view('customers.index', ['customers' => $customers]);
     }
 }
