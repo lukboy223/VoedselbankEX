@@ -13,17 +13,17 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        drop table if exists allergy_product;
-        CREATE TABLE allergy_product (
+        drop table if exists Allergies_Products;
+        CREATE TABLE Allergies_Products (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Allergy_id INT UNSIGNED NOT NULL,
-    Product_id INT UNSIGNED NOT NULL,
+    Allergies_id INT UNSIGNED NOT NULL,
+    Products_id INT UNSIGNED NOT NULL,
     IsActive BIT NOT NULL DEFAULT 1,
     Created_at DATETIME(6) NOT NULL DEFAULT NOW(6),
     Updated_at DATETIME(6) NOT NULL DEFAULT NOW(6),
     Note VARCHAR(255) DEFAULT NULL,
-    FOREIGN KEY (Allergy_id) REFERENCES Allergy(id),
-    FOREIGN KEY (Product_id) REFERENCES Product(id)
+    FOREIGN KEY (Allergies_id) REFERENCES Allergies(id),
+    FOREIGN KEY (Products_id) REFERENCES Products(id)
 );
         ');
     }
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('allergy_product');
+        Schema::dropIfExists('Allergies_Products');
     }
 };

@@ -13,19 +13,19 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        drop table if exists shipment;
-        CREATE TABLE Shipment (
+        drop table if exists shipments;
+        CREATE TABLE shipments (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Supplier_id INT UNSIGNED NOT NULL,
-    Product_id INT UNSIGNED NOT NULL,
+    Suppliers_id INT UNSIGNED NOT NULL,
+    Products_id INT UNSIGNED NOT NULL,
     Amount MEDIUMINT UNSIGNED NOT NULL,
     DateDelivery DATE NOT NULL,
     IsActive BIT NOT NULL DEFAULT 1,
     Created_at DATETIME(6) NOT NULL DEFAULT NOW(6),
     Updated_at DATETIME(6) NOT NULL DEFAULT NOW(6),
     Note VARCHAR(255) DEFAULT NULL,
-    FOREIGN KEY (Supplier_id) REFERENCES Supplier(id),
-    FOREIGN KEY (Product_id) REFERENCES Product(id)
+    FOREIGN KEY (Suppliers_id) REFERENCES Suppliers(id),
+    FOREIGN KEY (Products_id) REFERENCES Products(id)
 );
         ');
     }
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shipment');
+        Schema::dropIfExists('shipments');
     }
 };

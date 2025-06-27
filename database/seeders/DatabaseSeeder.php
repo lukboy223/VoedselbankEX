@@ -14,9 +14,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Contact gegevens
-        $contactIds = [];
-        $contacts = [
+        // Contacts gegevens
+        $ContactsIds = [];
+        $Contactss = [
             ['Streetname' => 'Hoofdstraat', 'Housenumber' => '12', 'Zipcode' => '5231AB', 'Place' => 'Den Bosch', 'PhoneNumber' => '0731234567'],
             ['Streetname' => 'Kerkstraat', 'Housenumber' => '45', 'Zipcode' => '5232CD', 'Place' => 'Den Bosch', 'PhoneNumber' => '0731234568'],
             ['Streetname' => 'Dorpsplein', 'Housenumber' => '8', 'Zipcode' => '5233EF', 'Place' => 'Maaskantje', 'PhoneNumber' => '0731234569'],
@@ -27,8 +27,8 @@ class DatabaseSeeder extends Seeder
             ['Streetname' => 'Marktplein', 'Housenumber' => '9', 'Zipcode' => '5238OP', 'Place' => 'Maaskantje', 'PhoneNumber' => '0731234574'],
         ];
 
-        foreach ($contacts as $contact) {
-            $contactIds[] = DB::table('Contact')->insertGetId(array_merge($contact, [
+        foreach ($Contactss as $Contacts) {
+            $ContactsIds[] = DB::table('Contacts')->insertGetId(array_merge($Contacts, [
                 'IsActive' => 1,
                 'Created_at' => now(),
                 'Updated_at' => now(),
@@ -38,14 +38,14 @@ class DatabaseSeeder extends Seeder
         // Users aanmaken
         $userIds = [];
         $users = [
-            ['name' => 'Jan de Vries', 'email' => 'jan@voedselbank.nl', 'contact_id' => $contactIds[0]],
-            ['name' => 'Maria Jansen', 'email' => 'maria@voedselbank.nl', 'contact_id' => $contactIds[1]],
-            ['name' => 'Piet Bakker', 'email' => 'piet@familie.nl', 'contact_id' => $contactIds[2]],
-            ['name' => 'Klaas Smit', 'email' => 'klaas@familie.nl', 'contact_id' => $contactIds[3]],
-            ['name' => 'Anna van der Berg', 'email' => 'anna@familie.nl', 'contact_id' => $contactIds[4]],
-            ['name' => 'Henk Visser', 'email' => 'henk@leverancier.nl', 'contact_id' => $contactIds[5]],
-            ['name' => 'Sophie Mulder', 'email' => 'sophie@leverancier.nl', 'contact_id' => $contactIds[6]],
-            ['name' => 'Tom van Dijk', 'email' => 'tom@leverancier.nl', 'contact_id' => $contactIds[7]],
+            ['name' => 'Jan de Vries', 'email' => 'jan@voedselbank.nl', 'Contacts_id' => $ContactsIds[0]],
+            ['name' => 'Maria Jansen', 'email' => 'maria@voedselbank.nl', 'Contacts_id' => $ContactsIds[1]],
+            ['name' => 'Piet Bakker', 'email' => 'piet@familie.nl', 'Contacts_id' => $ContactsIds[2]],
+            ['name' => 'Klaas Smit', 'email' => 'klaas@familie.nl', 'Contacts_id' => $ContactsIds[3]],
+            ['name' => 'Anna van der Berg', 'email' => 'anna@familie.nl', 'Contacts_id' => $ContactsIds[4]],
+            ['name' => 'Henk Visser', 'email' => 'henk@leverancier.nl', 'Contacts_id' => $ContactsIds[5]],
+            ['name' => 'Sophie Mulder', 'email' => 'sophie@leverancier.nl', 'Contacts_id' => $ContactsIds[6]],
+            ['name' => 'Tom van Dijk', 'email' => 'tom@leverancier.nl', 'Contacts_id' => $ContactsIds[7]],
         ];
 
         foreach ($users as $user) {
@@ -57,15 +57,15 @@ class DatabaseSeeder extends Seeder
         }
 
         // Klanten aanmaken
-        $customerIds = [];
-        $customers = [
+        $CustomersIds = [];
+        $Customerss = [
             ['User_id' => $userIds[2], 'GezinsNaam' => 'Familie Bakker', 'AmountAdults' => 2, 'AmoundChilderen' => 2, 'Amountbabies' => 0, 'Wishes' => 'Geen noten graag'],
-            ['User_id' => $userIds[3], 'GezinsNaam' => 'Familie Smit', 'AmountAdults' => 1, 'AmoundChilderen' => 1, 'Amountbabies' => 1, 'Wishes' => 'Vegetarische producten'],
-            ['User_id' => $userIds[4], 'GezinsNaam' => 'Familie van der Berg', 'AmountAdults' => 2, 'AmoundChilderen' => 3, 'Amountbabies' => 0, 'Wishes' => 'Halal producten'],
+            ['User_id' => $userIds[3], 'GezinsNaam' => 'Familie Smit', 'AmountAdults' => 1, 'AmoundChilderen' => 1, 'Amountbabies' => 1, 'Wishes' => 'Vegetarische Productsen'],
+            ['User_id' => $userIds[4], 'GezinsNaam' => 'Familie van der Berg', 'AmountAdults' => 2, 'AmoundChilderen' => 3, 'Amountbabies' => 0, 'Wishes' => 'Halal Productsen'],
         ];
 
-        foreach ($customers as $customer) {
-            $customerIds[] = DB::table('Customer')->insertGetId(array_merge($customer, [
+        foreach ($Customerss as $Customers) {
+            $CustomersIds[] = DB::table('Customers')->insertGetId(array_merge($Customers, [
                 'IsActive' => 1,
                 'Created_at' => now(),
                 'Updated_at' => now(),
@@ -73,15 +73,15 @@ class DatabaseSeeder extends Seeder
         }
 
         // Leveranciers aanmaken
-        $supplierIds = [];
-        $suppliers = [
-            ['User_id' => $userIds[5], 'SupplierName' => 'Albert Heijn Distributie', 'ContactPersonName' => 'Henk Visser'],
-            ['User_id' => $userIds[6], 'SupplierName' => 'Jumbo Groothandel', 'ContactPersonName' => 'Sophie Mulder'],
-            ['User_id' => $userIds[7], 'SupplierName' => 'Lokale Bakkerij De Korenschoof', 'ContactPersonName' => 'Tom van Dijk'],
+        $SuppliersIds = [];
+        $Supplierss = [
+            ['User_id' => $userIds[5], 'SuppliersName' => 'Albert Heijn Distributie', 'ContactsPersonName' => 'Henk Visser'],
+            ['User_id' => $userIds[6], 'SuppliersName' => 'Jumbo Groothandel', 'ContactsPersonName' => 'Sophie Mulder'],
+            ['User_id' => $userIds[7], 'SuppliersName' => 'Lokale Bakkerij De Korenschoof', 'ContactsPersonName' => 'Tom van Dijk'],
         ];
 
-        foreach ($suppliers as $supplier) {
-            $supplierIds[] = DB::table('Supplier')->insertGetId(array_merge($supplier, [
+        foreach ($Supplierss as $Suppliers) {
+            $SuppliersIds[] = DB::table('Suppliers')->insertGetId(array_merge($Suppliers, [
                 'IsActive' => 1,
                 'Created_at' => now(),
                 'Updated_at' => now(),
@@ -89,7 +89,7 @@ class DatabaseSeeder extends Seeder
         }
 
         // Allergieën aanmaken
-        $allergyIds = [];
+        $AllergiesIds = [];
         $allergies = [
             ['Name' => 'Noten'],
             ['Name' => 'Lactose'],
@@ -100,17 +100,17 @@ class DatabaseSeeder extends Seeder
             ['Name' => 'Sesam'],
         ];
 
-        foreach ($allergies as $allergy) {
-            $allergyIds[] = DB::table('Allergy')->insertGetId(array_merge($allergy, [
+        foreach ($allergies as $Allergies) {
+            $AllergiesIds[] = DB::table('Allergies')->insertGetId(array_merge($Allergies, [
                 'IsActive' => 1,
                 'Created_at' => now(),
                 'Updated_at' => now(),
             ]));
         }
 
-        // Producten aanmaken
-        $productIds = [];
-        $products = [
+        // Productsen aanmaken
+        $ProductsIds = [];
+        $Productss = [
             ['Name' => 'Volkoren Brood', 'Barcode' => '8712345678901', 'Category' => 'Brood & Banket'],
             ['Name' => 'Volle Melk 1L', 'Barcode' => '8712345678902', 'Category' => 'Zuivel'],
             ['Name' => 'Bananen 1kg', 'Barcode' => '8712345678903', 'Category' => 'Fruit & Groente'],
@@ -123,24 +123,24 @@ class DatabaseSeeder extends Seeder
             ['Name' => 'Rijst 1kg', 'Barcode' => '8712345678910', 'Category' => 'Houdbaar'],
         ];
 
-        foreach ($products as $product) {
-            $productIds[] = DB::table('Product')->insertGetId(array_merge($product, [
+        foreach ($Productss as $Products) {
+            $ProductsIds[] = DB::table('Products')->insertGetId(array_merge($Products, [
                 'IsActive' => 1,
                 'Created_at' => now(),
                 'Updated_at' => now(),
             ]));
         }
 
-        // Allergie-Product koppelingen
-        $allergyProductLinks = [
-            ['Allergy_id' => $allergyIds[1], 'Product_id' => $productIds[1]], // Lactose - Melk
-            ['Allergy_id' => $allergyIds[2], 'Product_id' => $productIds[0]], // Gluten - Brood
-            ['Allergy_id' => $allergyIds[1], 'Product_id' => $productIds[7]], // Lactose - Kaas
-            ['Allergy_id' => $allergyIds[2], 'Product_id' => $productIds[3]], // Gluten - Spaghetti
+        // Allergie-Products koppelingen
+        $AllergiesProductsLinks = [
+            ['Allergies_id' => $AllergiesIds[1], 'Products_id' => $ProductsIds[1]], // Lactose - Melk
+            ['Allergies_id' => $AllergiesIds[2], 'Products_id' => $ProductsIds[0]], // Gluten - Brood
+            ['Allergies_id' => $AllergiesIds[1], 'Products_id' => $ProductsIds[7]], // Lactose - Kaas
+            ['Allergies_id' => $AllergiesIds[2], 'Products_id' => $ProductsIds[3]], // Gluten - Spaghetti
         ];
 
-        foreach ($allergyProductLinks as $link) {
-            DB::table('Allergy_Product')->insert(array_merge($link, [
+        foreach ($AllergiesProductsLinks as $link) {
+            DB::table('Allergies_Products')->insert(array_merge($link, [
                 'IsActive' => 1,
                 'Created_at' => now(),
                 'Updated_at' => now(),
@@ -148,17 +148,17 @@ class DatabaseSeeder extends Seeder
         }
 
         // Leveringen aanmaken
-        $shipments = [
-            ['Supplier_id' => $supplierIds[0], 'Product_id' => $productIds[0], 'Amount' => 50, 'DateDelivery' => '2025-06-20'],
-            ['Supplier_id' => $supplierIds[0], 'Product_id' => $productIds[1], 'Amount' => 30, 'DateDelivery' => '2025-06-21'],
-            ['Supplier_id' => $supplierIds[1], 'Product_id' => $productIds[2], 'Amount' => 25, 'DateDelivery' => '2025-06-22'],
-            ['Supplier_id' => $supplierIds[1], 'Product_id' => $productIds[3], 'Amount' => 40, 'DateDelivery' => '2025-06-23'],
-            ['Supplier_id' => $supplierIds[2], 'Product_id' => $productIds[0], 'Amount' => 20, 'DateDelivery' => '2025-06-24'],
-            ['Supplier_id' => $supplierIds[0], 'Product_id' => $productIds[4], 'Amount' => 15, 'DateDelivery' => '2025-06-25'],
+        $shipmentss = [
+            ['Suppliers_id' => $SuppliersIds[0], 'Products_id' => $ProductsIds[0], 'Amount' => 50, 'DateDelivery' => '2025-06-20'],
+            ['Suppliers_id' => $SuppliersIds[0], 'Products_id' => $ProductsIds[1], 'Amount' => 30, 'DateDelivery' => '2025-06-21'],
+            ['Suppliers_id' => $SuppliersIds[1], 'Products_id' => $ProductsIds[2], 'Amount' => 25, 'DateDelivery' => '2025-06-22'],
+            ['Suppliers_id' => $SuppliersIds[1], 'Products_id' => $ProductsIds[3], 'Amount' => 40, 'DateDelivery' => '2025-06-23'],
+            ['Suppliers_id' => $SuppliersIds[2], 'Products_id' => $ProductsIds[0], 'Amount' => 20, 'DateDelivery' => '2025-06-24'],
+            ['Suppliers_id' => $SuppliersIds[0], 'Products_id' => $ProductsIds[4], 'Amount' => 15, 'DateDelivery' => '2025-06-25'],
         ];
 
-        foreach ($shipments as $shipment) {
-            DB::table('Shipment')->insert(array_merge($shipment, [
+        foreach ($shipmentss as $shipments) {
+            DB::table('shipments')->insert(array_merge($shipments, [
                 'IsActive' => 1,
                 'Created_at' => now(),
                 'Updated_at' => now(),
@@ -167,16 +167,16 @@ class DatabaseSeeder extends Seeder
 
         // Voorraad aanmaken
         $storage = [
-            ['Product_id' => $productIds[0], 'Amount' => 45], // Brood
-            ['Product_id' => $productIds[1], 'Amount' => 28], // Melk
-            ['Product_id' => $productIds[2], 'Amount' => 22], // Bananen
-            ['Product_id' => $productIds[3], 'Amount' => 38], // Spaghetti
-            ['Product_id' => $productIds[4], 'Amount' => 12], // Gehakt
-            ['Product_id' => $productIds[5], 'Amount' => 35], // Tomatensoep
-            ['Product_id' => $productIds[6], 'Amount' => 20], // Appelsap
-            ['Product_id' => $productIds[7], 'Amount' => 18], // Kaas
-            ['Product_id' => $productIds[8], 'Amount' => 30], // Aardappelen
-            ['Product_id' => $productIds[9], 'Amount' => 25], // Rijst
+            ['Products_id' => $ProductsIds[0], 'Amount' => 45], // Brood
+            ['Products_id' => $ProductsIds[1], 'Amount' => 28], // Melk
+            ['Products_id' => $ProductsIds[2], 'Amount' => 22], // Bananen
+            ['Products_id' => $ProductsIds[3], 'Amount' => 38], // Spaghetti
+            ['Products_id' => $ProductsIds[4], 'Amount' => 12], // Gehakt
+            ['Products_id' => $ProductsIds[5], 'Amount' => 35], // Tomatensoep
+            ['Products_id' => $ProductsIds[6], 'Amount' => 20], // Appelsap
+            ['Products_id' => $ProductsIds[7], 'Amount' => 18], // Kaas
+            ['Products_id' => $ProductsIds[8], 'Amount' => 30], // Aardappelen
+            ['Products_id' => $ProductsIds[9], 'Amount' => 25], // Rijst
         ];
 
         foreach ($storage as $stock) {
@@ -188,47 +188,47 @@ class DatabaseSeeder extends Seeder
         }
 
         // Voedselpakketten aanmaken
-        $foodPackageIds = [];
-        $foodPackages = [
-            ['Customer_id' => $customerIds[0], 'PackageNumber' => 'VP-2025-001', 'DateOfCreation' => '2025-06-26', 'DateOfDispatch' => '2025-06-27'],
-            ['Customer_id' => $customerIds[1], 'PackageNumber' => 'VP-2025-002', 'DateOfCreation' => '2025-06-26', 'DateOfDispatch' => '2025-06-28'],
-            ['Customer_id' => $customerIds[2], 'PackageNumber' => 'VP-2025-003', 'DateOfCreation' => '2025-06-27', 'DateOfDispatch' => '2025-06-29'],
+        $FoodPackagesIds = [];
+        $FoodPackagess = [
+            ['Customers_id' => $CustomersIds[0], 'PackageNumber' => 'VP-2025-001', 'DateOfCreation' => '2025-06-26', 'DateOfDispatch' => '2025-06-27'],
+            ['Customers_id' => $CustomersIds[1], 'PackageNumber' => 'VP-2025-002', 'DateOfCreation' => '2025-06-26', 'DateOfDispatch' => '2025-06-28'],
+            ['Customers_id' => $CustomersIds[2], 'PackageNumber' => 'VP-2025-003', 'DateOfCreation' => '2025-06-27', 'DateOfDispatch' => '2025-06-29'],
         ];
 
-        foreach ($foodPackages as $package) {
-            $foodPackageIds[] = DB::table('FoodPackage')->insertGetId(array_merge($package, [
+        foreach ($FoodPackagess as $package) {
+            $FoodPackagesIds[] = DB::table('FoodPackages')->insertGetId(array_merge($package, [
                 'IsActive' => 1,
                 'Created_at' => now(),
                 'Updated_at' => now(),
             ]));
         }
 
-        // Product-Voedselpakket koppelingen
-        $productFoodPackageLinks = [
+        // Products-Voedselpakket koppelingen
+        $ProductsFoodPackagesLinks = [
             // Pakket 1 - Familie Bakker
-            ['FoodPackage_id' => $foodPackageIds[0], 'Product_id' => $productIds[0]], // Brood
-            ['FoodPackage_id' => $foodPackageIds[0], 'Product_id' => $productIds[1]], // Melk
-            ['FoodPackage_id' => $foodPackageIds[0], 'Product_id' => $productIds[2]], // Bananen
-            ['FoodPackage_id' => $foodPackageIds[0], 'Product_id' => $productIds[3]], // Spaghetti
-            ['FoodPackage_id' => $foodPackageIds[0], 'Product_id' => $productIds[8]], // Aardappelen
+            ['FoodPackages_id' => $FoodPackagesIds[0], 'Products_id' => $ProductsIds[0]], // Brood
+            ['FoodPackages_id' => $FoodPackagesIds[0], 'Products_id' => $ProductsIds[1]], // Melk
+            ['FoodPackages_id' => $FoodPackagesIds[0], 'Products_id' => $ProductsIds[2]], // Bananen
+            ['FoodPackages_id' => $FoodPackagesIds[0], 'Products_id' => $ProductsIds[3]], // Spaghetti
+            ['FoodPackages_id' => $FoodPackagesIds[0], 'Products_id' => $ProductsIds[8]], // Aardappelen
             
             // Pakket 2 - Familie Smit (vegetarisch)
-            ['FoodPackage_id' => $foodPackageIds[1], 'Product_id' => $productIds[0]], // Brood
-            ['FoodPackage_id' => $foodPackageIds[1], 'Product_id' => $productIds[1]], // Melk
-            ['FoodPackage_id' => $foodPackageIds[1], 'Product_id' => $productIds[2]], // Bananen
-            ['FoodPackage_id' => $foodPackageIds[1], 'Product_id' => $productIds[5]], // Tomatensoep
-            ['FoodPackage_id' => $foodPackageIds[1], 'Product_id' => $productIds[9]], // Rijst
+            ['FoodPackages_id' => $FoodPackagesIds[1], 'Products_id' => $ProductsIds[0]], // Brood
+            ['FoodPackages_id' => $FoodPackagesIds[1], 'Products_id' => $ProductsIds[1]], // Melk
+            ['FoodPackages_id' => $FoodPackagesIds[1], 'Products_id' => $ProductsIds[2]], // Bananen
+            ['FoodPackages_id' => $FoodPackagesIds[1], 'Products_id' => $ProductsIds[5]], // Tomatensoep
+            ['FoodPackages_id' => $FoodPackagesIds[1], 'Products_id' => $ProductsIds[9]], // Rijst
             
             // Pakket 3 - Familie van der Berg
-            ['FoodPackage_id' => $foodPackageIds[2], 'Product_id' => $productIds[0]], // Brood
-            ['FoodPackage_id' => $foodPackageIds[2], 'Product_id' => $productIds[6]], // Appelsap
-            ['FoodPackage_id' => $foodPackageIds[2], 'Product_id' => $productIds[2]], // Bananen
-            ['FoodPackage_id' => $foodPackageIds[2], 'Product_id' => $productIds[3]], // Spaghetti
-            ['FoodPackage_id' => $foodPackageIds[2], 'Product_id' => $productIds[8]], // Aardappelen
+            ['FoodPackages_id' => $FoodPackagesIds[2], 'Products_id' => $ProductsIds[0]], // Brood
+            ['FoodPackages_id' => $FoodPackagesIds[2], 'Products_id' => $ProductsIds[6]], // Appelsap
+            ['FoodPackages_id' => $FoodPackagesIds[2], 'Products_id' => $ProductsIds[2]], // Bananen
+            ['FoodPackages_id' => $FoodPackagesIds[2], 'Products_id' => $ProductsIds[3]], // Spaghetti
+            ['FoodPackages_id' => $FoodPackagesIds[2], 'Products_id' => $ProductsIds[8]], // Aardappelen
         ];
 
-        foreach ($productFoodPackageLinks as $link) {
-            DB::table('Product_FoodPackage')->insert(array_merge($link, [
+        foreach ($ProductsFoodPackagesLinks as $link) {
+            DB::table('Products_FoodPackages')->insert(array_merge($link, [
                 'IsActive' => 1,
                 'Created_at' => now(),
                 'Updated_at' => now(),
@@ -240,13 +240,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'Voedselbank Beheerder',
             'email' => 'admin@voedselbank-maaskantje.nl',
             'password' => Hash::make('wachtwoord'),
-            'contact_id' => $contactIds[0],
+            'Contacts_id' => $ContactsIds[0],
         ]);
         User::factory()->create([
             'name' => 'Voedselbank Beheerder',
             'email' => 'test@example.com',
             'password' => Hash::make('cookie123'),
-            'contact_id' => $contactIds[0],
+            'Contacts_id' => $ContactsIds[0],
         ]);
     }
 }
