@@ -2,7 +2,7 @@
 <div class="w-3/4 m-auto">
     <div class="mt-2">
         <input id="supplierSearch" type="text" class="p-4 w-full border rounded-md bg-cool-gray-200 text-black"
-            wire:model.live.debounce.300ms="searchText" placeholder="supplier met naam zoeken..."
+            wire:model.live.debounce.300ms="searchText" placeholder="Leverancier op naam zoeken..."
             oninput="hideSQLTable(value)">
     </div>
 

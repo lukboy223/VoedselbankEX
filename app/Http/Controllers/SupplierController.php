@@ -40,4 +40,19 @@ class SupplierController extends Controller
         return view('Suppliers.index', ['suppliers' => $Suppliers]);
 
     }
+
+    public function show($id) {
+        // try catch looks if the SP exists
+        try{
+            $Supplier = DB::select('call sp_read_Supplier(?)', [$id]);
+        } catch (\Exception $e) {
+            //logs the error in the log
+            Log::error('error reading Supplier: ' . $e->getMessage());
+            //makes an empty array if the SP doesn't exist
+            $Supplier = [];
+        }
+        
+        //redirect the user to the show page with the Supplier
+        return view('Suppliers.show', ['supplier' => $Supplier[0]]);
+    }
 }

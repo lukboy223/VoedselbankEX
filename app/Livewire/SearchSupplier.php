@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Supplier;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class SearchSupplier extends Component
@@ -25,7 +26,7 @@ class SearchSupplier extends Component
                 ->join('contacts', 'users.contacts_id', '=', 'contacts.id')
                 ->join('shipments', 'suppliers.id', '=', 'shipments.suppliers_id')
                 ->groupBy('suppliers.id', 'suppliers.SuppliersName', 'contacts.PhoneNumber', 'suppliers.ContactsPersonName')
-                ->select('suppliers.id', 'suppliers.SuppliersName', 'contacts.PhoneNumber', 'suppliers.ContactsPersonName', \DB::raw('MAX(shipments.DateDelivery) as LastShipmentDate'))
+                ->select('suppliers.id', 'suppliers.SuppliersName', 'contacts.PhoneNumber', 'suppliers.ContactsPersonName', DB::raw('MAX(shipments.DateDelivery) as LastShipmentDate'))
                 ->where('suppliers.SuppliersName', 'like', '%' . $this->searchText . '%')
                 ->get();
                 $this->hasResults = !empty($this->results);
