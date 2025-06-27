@@ -20,7 +20,8 @@ Route::post('/customers', [CustomerController::class, 'store'])->name('customers
 // Edit klant route
 Route::get('/customers/edit/{id}', [CustomerController::class, 'edit'])->name('customers.edit');
 Route::patch('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
-
+// Delete klant route
+Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

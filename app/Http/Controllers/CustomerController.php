@@ -167,4 +167,21 @@ class CustomerController extends Controller
             ])->withInput();
         }
     }
+
+    // Verwijder een klant
+    public function destroy($id)
+    {
+        // try catch looks if the SP exists
+        try {
+            DB::select('call sp_delete_Customers(?)', [$id]);
+        } catch (\Exception $e) {
+            //logs the error in the log
+            Log::error('error deleting customers: ' . $e->getMessage());
+            //redirects the user to the index page with an error message
+            return redirect()->route('customers.index')->with('error', 'Er is een fout opgetreden bij het verwijderen van de klantgegevens.');
+        }
+
+        //redirects the user to the index page with a success message
+        return redirect()->route('customers.index')->with('success', 'Klant succesvol verwijderd');
+    }
 }
