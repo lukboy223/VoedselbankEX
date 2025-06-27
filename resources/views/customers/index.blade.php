@@ -28,6 +28,12 @@
                         <th class="border-r-2 border-[#D0D0D0]">Adres</th>
                         <th class="border-r-2 border-[#D0D0D0]">Telefoonnummer</th>
                         <th class="border-r-2 border-[#D0D0D0]">E-mailadres</th>
+                        <th class="border-r-2 border-[#D0D0D0]">Volwassenen</th>
+                        <th class="border-r-2 border-[#D0D0D0]">Kinderen</th>
+                        <th class="border-r-2 border-[#D0D0D0]">Baby's</th>
+                        <th class="border-r-2 border-[#D0D0D0]">Wensen</th>
+                        <th class="border-r-2 border-[#D0D0D0]">Aangemaakt</th>
+                        <th class="border-r-2 border-[#D0D0D0]">Bijgewerkt</th>
                         <th class="border-r-2 border-[#D0D0D0]">Wijzigen</th>
                         <th>Verwijderen</th>
                     </tr>
@@ -35,7 +41,7 @@
                 <tbody>
                     @if($customers->isEmpty())
                     <tr>
-                        <td colspan="9" class="bg-[#F88080] text-center py-4">
+                        <td colspan="13" class="bg-[#F88080] text-center py-4">
                             Geen klanten gevonden, probeer het later opnieuw.
                         </td>
                     </tr>
@@ -48,6 +54,12 @@
                         </td>
                         <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0]">{{ $customer->Telefoonnummer }}</td>
                         <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0]">{{ $customer->Email }}</td>
+                        <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0]">{{ $customer->AmountAdults }}</td>
+                        <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0]">{{ $customer->AmoundChilderen }}</td>
+                        <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0]">{{ $customer->Amountbabies }}</td>
+                        <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0]">{{ $customer->Wishes }}</td>
+                        <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0]">{{ \Carbon\Carbon::parse($customer->Created_at)->format('d-m-Y H:i') }}</td>
+                        <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0]">{{ \Carbon\Carbon::parse($customer->Updated_at)->format('d-m-Y H:i') }}</td>
                         <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0] text-center">
                             <a href="#" class="block bg-[#9BC8F2] text-white rounded px-2 py-1">Wijzigen</a>
                         </td>
@@ -59,6 +71,7 @@
                     @endif
                 </tbody>
             </table>
+
         </section>
 
         <div class="w-full flex justify-center my-6">
