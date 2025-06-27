@@ -53,6 +53,26 @@
                         <label class="block mb-1">Postcode</label>
                         <input type="text" name="Zipcode" placeholder="3811AB..." class="w-full px-3 py-2 border border-gray-300 rounded-md" value="{{ old('Zipcode') }}">
                     </div>
+
+                    <div class="mb-4">
+                        <label class="block mb-1">Telefoonnummer</label>
+                        <input type="tel" name="PhoneNumber" placeholder="06 12345678..." class="w-full px-3 py-2 border border-gray-300 rounded-md" value="{{ old('PhoneNumber') }}">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block mb-1">E-mailadres</label>
+                        <input type="email" name="email" placeholder="voorbeeld@gmail.com..." class="w-full px-3 py-2 border border-gray-300 rounded-md" value="{{ old('Email') }}">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block mb-1">Wachtwoord</label>
+                        <input type="password" name="password" placeholder="wachtwoord..." class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block mb-1">Bevestig wachtwoord</label>
+                        <input type="password" name="password_confirmation" placeholder="wachtwoord..." class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                    </div>
                 </div>
 
                 <!-- Algemene gegevens -->
@@ -73,7 +93,7 @@
 
                     <div class="mb-4">
                         <label class="block mb-1">Aantal kinderen</label>
-                        <input type="number" name="AmountChildren" min="0" class="w-full px-3 py-2 border border-gray-300 rounded-md" value="{{ old('AmountChildren') }}">
+                        <input type="number" name="AmoundChilderen" min="0" class="w-full px-3 py-2 border border-gray-300 rounded-md" value="{{ old('AmountChildren') }}">
                     </div>
 
                     <div class="mb-4">
@@ -84,26 +104,6 @@
                     <div class="mb-4">
                         <label class="block mb-1">Wensen</label>
                         <textarea name="Wishes" rows="3" placeholder="Bijv. Geen noten, vegetarisch..." class="w-full px-3 py-2 border border-gray-300 rounded-md">{{ old('Wishes') }}</textarea>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block mb-1">Telefoonnummer</label>
-                        <input type="tel" name="PhoneNumber" placeholder="06 12345678..." class="w-full px-3 py-2 border border-gray-300 rounded-md" value="{{ old('PhoneNumber') }}">
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block mb-1">E-mailadres</label>
-                        <input type="email" name="Email" placeholder="voorbeeld@gmail.com..." class="w-full px-3 py-2 border border-gray-300 rounded-md" value="{{ old('Email') }}">
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block mb-1">Wachtwoord</label>
-                        <input type="password" name="password" placeholder="wachtwoord..." class="w-full px-3 py-2 border border-gray-300 rounded-md">
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block mb-1">Bevestig wachtwoord</label>
-                        <input type="password" name="password_confirmation" placeholder="wachtwoord..." class="w-full px-3 py-2 border border-gray-300 rounded-md">
                     </div>
                 </div>
             </div>

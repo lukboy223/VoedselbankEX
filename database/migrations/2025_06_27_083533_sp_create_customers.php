@@ -13,47 +13,40 @@ return new class extends Migration
         DB::unprepared('
             DROP PROCEDURE IF EXISTS sp_create_Customers;
             CREATE PROCEDURE sp_create_Customers(
-                IN p_GezinsNaam VARCHAR(150),
-                IN p_AmountAdults TINYINT,
-                IN p_AmoundChilderen TINYINT,
-                IN p_Amountbabies TINYINT,
-                IN p_Wishes TEXT,
-                IN p_Note VARCHAR(255),
-                IN p_PhoneNumber VARCHAR(20),
-                IN p_Streetname VARCHAR(255),
-                IN p_Housenumber VARCHAR(10),
-                IN p_ZipCode VARCHAR(10),
-                IN p_Place VARCHAR(100),
-                IN p_Email VARCHAR(255),
-                IN p_Password VARCHAR(255)
-            )
-            BEGIN
-                -- Voeg eerst contactgegevens toe
-                INSERT INTO Contacts (PhoneNumber, Streetname, Housenumber, Zipcode, Place)
-                VALUES (p_PhoneNumber, p_Streetname, p_Housenumber, p_ZipCode, p_Place);
+            IN p_GezinsNaam VARCHAR(255),
+            IN p_AmountAdults INT,
+            IN p_AmoundChilderen INT,
+            IN p_Amountbabies INT,
+            IN p_Wishes TEXT,
+            IN p_Streetname VARCHAR(255),
+            IN p_Housenumber VARCHAR(10),
+            IN p_Zipcode VARCHAR(20),
+            IN p_Place VARCHAR(255),
+            IN p_PhoneNumber VARCHAR(20),
+            IN p_email VARCHAR(255),
+            IN p_Password VARCHAR(255)
+        )
+        BEGIN
+            DECLARE v_ContactId INT;
+            DECLARE v_UserId INT;
 
-                -- Voeg daarna gebruiker toe met verwijzing naar laatst ingevoerde contact
-                INSERT INTO Users (email, password, Contacts_id)
-                VALUES (p_Email, p_Password, LAST_INSERT_ID());
+            START TRANSACTION;
 
-                -- Voeg daarna klant toe met verwijzing naar laatst ingevoerde user
-                INSERT INTO Customers (
-                    User_id, GezinsNaam, AmountAdults, AmoundChilderen, Amountbabies,
-                    Wishes, IsActive, Created_at, Updated_at, Note
-                )
-                VALUES (
-                    LAST_INSERT_ID(),
-                    p_GezinsNaam,
-                    p_AmountAdults,
-                    p_AmoundChilderen,
-                    p_Amountbabies,
-                    p_Wishes,
-                    1,
-                    NOW(6),
-                    NOW(6),
-                    p_Note
-                );
-            END
+            INSERT INTO Contacts (Streetname, Housenumber, Zipcode, Place, PhoneNumber, created_at, updated_at)
+            VALUES (p_Streetname, p_Housenumber, p_Zipcode, p_Place, p_PhoneNumber, NOW(), NOW());
+
+            SET v_ContactId = LAST_INSERT_ID();
+
+            INSERT INTO users (email, password, name, Contacts_id, created_at, updated_at)
+            VALUES (p_email, p_Password, p_GezinsNaam, v_ContactId, NOW(), NOW());
+
+            SET v_UserId = LAST_INSERT_ID();
+
+            INSERT INTO Customers (GezinsNaam, AmountAdults, AmoundChilderen, Amountbabies, Wishes, User_id, IsActive, created_at, updated_at)
+            VALUES (p_GezinsNaam, p_AmountAdults, p_AmoundChilderen, p_Amountbabies, p_Wishes, v_UserId, 1, NOW(), NOW());
+
+            COMMIT;
+        END
         ');
     }
 

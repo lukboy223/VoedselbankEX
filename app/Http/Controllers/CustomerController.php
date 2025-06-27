@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 
 
 class CustomerController extends Controller
@@ -67,49 +68,43 @@ class CustomerController extends Controller
     // en dat de juiste velden worden gevalideerd
     public function store(Request $request)
     {
+        $messages = [
+            'GezinsNaam.unique' => 'The family name has already been taken.',
+        ];
         $validated = $request->validate([
+            'GezinsNaam' => 'required|string|max:255|unique:Customers,GezinsNaam',
+            'AmountAdults' => 'required|integer|min:0',
+            'AmoundChilderen' => 'required|integer|min:0',
+            'Amountbabies' => 'required|integer|min:0',
+            'Wishes' => 'nullable|string',
             'Streetname' => 'required|string|max:255',
             'Housenumber' => 'required|string|max:10',
+            'Zipcode' => 'required|string|max:20',
             'Place' => 'required|string|max:255',
-            'Zipcode' => 'required|string|max:10',
-            'GezinsNaam' => 'required|string|max:255',
-            'AmountAdults' => 'required|integer|min:0',
-            'AmountChildren' => 'required|integer|min:0',
-            'Amountbabies' => 'required|integer|min:0',
-            'Wishes' => 'nullable|string|max:500',
             'PhoneNumber' => 'required|string|max:20',
-            'Email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:6',
-        ]);
+            'email' => 'required|email|max:255',
+            'password' => 'required|string|min:6|confirmed', // voorbeeld validatie
+        ], $messages);
 
         try {
-            DB::select('CALL sp_create_Customer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            DB::statement('CALL sp_create_Customers(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                 $validated['GezinsNaam'],
+                $validated['AmountAdults'],
+                $validated['AmoundChilderen'],
+                $validated['Amountbabies'],
+                $validated['Wishes'],
                 $validated['Streetname'],
                 $validated['Housenumber'],
-                $validated['toevoeging'] ?? null,
                 $validated['Zipcode'],
                 $validated['Place'],
                 $validated['PhoneNumber'],
-                $validated['Email'],
-                bcrypt($request->input('password')),
-                $validated['AmountAdults'] ?? 0,
-                $validated['AmountChildren'] ?? 0,
-                $validated['AmountBabies'] ?? 0,
-                $validated['Wishes'] ?? null,
-                $validated['IsActive'] ?? 1,
+                $validated['email'],
+                Hash::make($validated['password']),
             ]);
 
-
-
-            return redirect()->route('customers.index')
-                ->with('success', "Klant succesvol toegevoegd: {$validated['GezinsNaam']}");
+            return redirect()->route('customers.index')->with('success', 'Klant succesvol toegevoegd.');
         } catch (\Exception $e) {
-            Log::error('Fout bij het aanmaken van klant: ' . $e->getMessage());
-
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Er is een fout opgetreden bij het toevoegen van de klant.');
+            return back()->withErrors(['general' => 'Er is iets misgegaan bij het toevoegen van de klant: ' . $e->getMessage()])->withInput();
         }
     }
 }
