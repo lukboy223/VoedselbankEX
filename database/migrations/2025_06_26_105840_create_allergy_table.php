@@ -21,7 +21,7 @@ return new class extends Migration
     Created_at DATETIME(6) NOT NULL DEFAULT NOW(6),
     Updated_at DATETIME(6) NOT NULL DEFAULT NOW(6),
     Note VARCHAR(255) DEFAULT NULL
-);');
+    );');
     }
 
     /**
