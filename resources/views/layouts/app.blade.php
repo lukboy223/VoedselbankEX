@@ -33,4 +33,14 @@
             </main>
         </div>
     </body>
+    <script>
+        function hideSQLTable(value) {
+        if (value == '') {
+            document.querySelector('#tableSQL').style.display = 'unset';
+        } else {
+            document.querySelector('#tableSQL').style.display = 'none';
+        }
+    }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </html>
