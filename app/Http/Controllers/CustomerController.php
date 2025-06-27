@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+
 
 
 class CustomerController extends Controller
@@ -105,6 +105,66 @@ class CustomerController extends Controller
             return redirect()->route('customers.index')->with('success', 'Klant succesvol toegevoegd.');
         } catch (\Exception $e) {
             return back()->withErrors(['general' => 'Er is iets misgegaan bij het toevoegen van de klant: ' . $e->getMessage()])->withInput();
+        }
+    }
+
+    // Toon formulier voor het bewerken van een klant
+    public function edit($id)
+    {
+        $customer = DB::table('Customers')
+            ->join('users', 'Customers.User_id', '=', 'users.id')
+            ->join('Contacts', 'users.Contacts_id', '=', 'Contacts.id')
+            ->where('Customers.id', $id)
+            ->select('Customers.*', 'users.email', 'Contacts.*')
+            ->first();
+
+        return view('customers.edit', compact('customer'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'GezinsNaam' => 'required|string|max:255|unique:Customers,GezinsNaam,' . $id,
+            'AmountAdults' => 'required|integer|min:0',
+            'AmoundChilderen' => 'required|integer|min:0',
+            'Amountbabies' => 'required|integer|min:0',
+            'Wishes' => 'nullable|string',
+            'Streetname' => 'required|string|max:255',
+            'Housenumber' => 'required|string|max:10',
+            'Zipcode' => 'required|string|max:20',
+            'Place' => 'required|string|max:255',
+            'PhoneNumber' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'password' => 'nullable|string|min:6|confirmed',
+        ], [
+            'GezinsNaam.unique' => 'The family name has already been taken.',
+        ]);
+
+        try {
+            DB::statement('CALL sp_update_Customers(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+                $id,
+                $validated['GezinsNaam'],
+                $validated['AmountAdults'],
+                $validated['AmoundChilderen'],
+                $validated['Amountbabies'],
+                $validated['Wishes'],
+                $validated['Streetname'],
+                $validated['Housenumber'],
+                $validated['Zipcode'],
+                $validated['Place'],
+                $validated['PhoneNumber'],
+                $validated['email'],
+                now()
+            ]);
+
+            return redirect()->route('customers.index')->with('success', 'Klant succesvol bijgewerkt.');
+        } catch (\Exception $e) {
+            \Log::error('Fout bij het bijwerken van klant: ' . $e->getMessage());
+
+            // Toon een algemene foutmelding
+            return back()->withErrors([
+                'general' => 'Er is een fout opgetreden bij het bijwerken van de klantgegevens.'
+            ])->withInput();
         }
     }
 }

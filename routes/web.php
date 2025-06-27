@@ -17,6 +17,10 @@ Route::get('/customers', [CustomerController::class, 'index'])->name('customers.
 // Deze route toont een formulier om een nieuwe klant aan te maken
 Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
 Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+// Edit klant route
+Route::get('/customers/edit/{id}', [CustomerController::class, 'edit'])->name('customers.edit');
+Route::patch('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

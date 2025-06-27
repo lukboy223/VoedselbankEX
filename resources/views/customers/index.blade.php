@@ -69,7 +69,7 @@
                             <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0]">{{ \Carbon\Carbon::parse($customer->Created_at)->format('d-m-Y H:i') }}</td>
                             <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0]">{{ \Carbon\Carbon::parse($customer->Updated_at)->format('d-m-Y H:i') }}</td>
                             <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0] text-center">
-                                <a href="#" class="block bg-[#9BC8F2] text-white rounded px-2 py-1">Wijzigen</a>
+                                <a href="{{ route('customers.edit', $customer->id) }}" class="block bg-[#9BC8F2] text-white rounded px-2 py-1">Wijzigen</a>
                             </td>
                             <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0] text-center">
                                 <a href="#" class="block bg-[#F88080] text-white rounded px-1 py-1">Verwijderen</a>
