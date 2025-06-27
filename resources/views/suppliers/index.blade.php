@@ -132,10 +132,11 @@
                 // Get supplier info from data attributes
                 const SupplierId = button.getAttribute('data-supplier-id');
                 const supplierName = button.getAttribute('data-supplier-name');
+                console.log(SupplierId, supplierName);
                 
                 // Update modal content
                 supplierNameSpan.textContent = supplierName;
-                deleteForm.action = `/supplier/${supplierId}`;
+                deleteForm.action = `/leveranciers/${SupplierId}/delete`;
                 
                 // Show modal
                 deleteModal.classList.remove('hidden');

@@ -193,4 +193,20 @@ class SupplierController extends Controller
                 ->with('error', 'Er is een fout opgetreden bij het bijwerken van de leverancier. Probeer het later opnieuw.');
         }
     }
+
+    public function destroy($id)
+    {
+        // try catch looks if the SP exists
+        try{
+            DB::select('call sp_delete_leverancier(?)', [$id]);
+        } catch (\Exception $e) {
+            //logs the error in the log
+            Log::error('error deleting Supplier: ' . $e->getMessage());
+            //redirects the user to the index page with an error message
+            return redirect()->route('supplier.index')->with('error', 'Er is een fout opgetreden bij het verwijderen van de leverancier. Probeer het later opnieuw.');
+        }
+        
+        //redirects the user to the index page with a success message
+        return redirect()->route('supplier.index')->with('success', 'Leverancier succesvol verwijderd');
+    }
 }
