@@ -92,7 +92,7 @@ class DatabaseSeeder extends Seeder
             ]));
         }
 
-        // Allergieën aanmaken
+        // AllergieÃ«n aanmaken
         $AllergiesIds = [];
         $allergies = [
             ['Name' => 'Noten'],
@@ -220,14 +220,14 @@ class DatabaseSeeder extends Seeder
             ['FoodPackages_id' => $FoodPackagesIds[0], 'Products_id' => $ProductsIds[2]], // Bananen
             ['FoodPackages_id' => $FoodPackagesIds[0], 'Products_id' => $ProductsIds[3]], // Spaghetti
             ['FoodPackages_id' => $FoodPackagesIds[0], 'Products_id' => $ProductsIds[8]], // Aardappelen
-            
+
             // Pakket 2 - Familie Smit (vegetarisch)
             ['FoodPackages_id' => $FoodPackagesIds[1], 'Products_id' => $ProductsIds[0]], // Brood
             ['FoodPackages_id' => $FoodPackagesIds[1], 'Products_id' => $ProductsIds[1]], // Melk
             ['FoodPackages_id' => $FoodPackagesIds[1], 'Products_id' => $ProductsIds[2]], // Bananen
             ['FoodPackages_id' => $FoodPackagesIds[1], 'Products_id' => $ProductsIds[5]], // Tomatensoep
             ['FoodPackages_id' => $FoodPackagesIds[1], 'Products_id' => $ProductsIds[9]], // Rijst
-            
+
             // Pakket 3 - Familie van der Berg
             ['FoodPackages_id' => $FoodPackagesIds[2], 'Products_id' => $ProductsIds[0]], // Brood
             ['FoodPackages_id' => $FoodPackagesIds[2], 'Products_id' => $ProductsIds[6]], // Appelsap
