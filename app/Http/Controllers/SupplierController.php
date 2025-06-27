@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
@@ -90,12 +92,13 @@ class SupplierController extends Controller
         
         try {
             // Call the stored procedure with the updated parameters
-            $result = DB::select('CALL sp_create_leverancier(?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            $result = DB::select('CALL sp_create_leverancier(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                 $request->SuppliersName,
                 $request->ContactsPersonName,
                 $request->phone,
                 $request->street_name,
                 $request->house_number,
+                $request->addition,
                 $request->postal_code,
                 $request->place,
                 $request->email,
@@ -115,6 +118,79 @@ class SupplierController extends Controller
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Er is een fout opgetreden bij het toevoegen van de leverancier. Probeer het later opnieuw.');
+        }
+    }
+
+    public function edit($id)
+    {
+        // try catch looks if the SP exists
+        try{
+            $Supplier = DB::select('call sp_read_Supplier(?)', [$id]);
+        } catch (\Exception $e) {
+            //logs the error in the log
+            Log::error('error reading Supplier: ' . $e->getMessage());
+            //makes an empty array if the SP doesn't exist
+           
+            return view('Suppliers.index',)->with('error', 'Er is een fout opgetreden bij het ophalen van de leverancier. Probeer het later opnieuw.');
+        }
+        if( empty($Supplier)) {
+            // If no supplier is found, redirect to the index with an error message
+            return redirect()->route('supplier.index')->with('error', 'Leverancier niet gevonden.');
+        }
+        //redirect the user to the edit page with the Supplier
+        return view('Suppliers.edit', ['supplier' => $Supplier[0]]);
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $userId = Supplier::where('id', $id)->value('user_id');
+        //validate the request
+        $request->validate([
+            'SuppliersName' => 'required|string|max:100|min:2|regex:/^[a-zA-Z\s]+$/',
+            'ContactsPersonName' => 'required|string|max:100|regex:/^[a-zA-Z\s]+$/',
+            'email' => 'required|email|max:255|unique:users,email,' . $userId,
+            'phone' => 'nullable|string|max:10',
+            'street_name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
+            'house_number' => 'required|string|max:10',
+            'addition' => 'nullable|string|max:10|regex:/^[a-zA-Z]+$/',
+            'postal_code' => 'required|string|max:6|min:6',
+            'place' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+        
+        // Only hash password if it's provided
+        $hashedPassword = $request->filled('password') ? bcrypt($request->password) : null;
+        
+        try {
+            // Call the stored procedure with the updated parameters
+            $result = DB::select('CALL sp_update_leverancier(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+                $id,
+                $request->SuppliersName,
+                $request->ContactsPersonName,
+                $request->phone,
+                $request->street_name,
+                $request->house_number,
+                $request->addition,
+                $request->postal_code,
+                $request->place,
+                $request->email,
+                $hashedPassword,
+               
+            ]);
+            
+            // Redirect with success message
+            return redirect()->route('supplier.index')
+                ->with('success', "Leverancier succesvol bijgewerkt");
+                
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error('Error updating supplier: ' . $e->getMessage());
+            
+            // Redirect back with error message
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Er is een fout opgetreden bij het bijwerken van de leverancier. Probeer het later opnieuw.');
         }
     }
 }

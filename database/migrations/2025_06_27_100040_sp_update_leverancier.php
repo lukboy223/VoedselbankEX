@@ -21,6 +21,7 @@ return new class extends Migration
                 IN PhoneNumber VARCHAR(20),
                 IN Streetname VARCHAR(255),
                 IN Housenumber VARCHAR(10),
+                IN Addition VARCHAR(10),
                 IN ZipCode VARCHAR(10),
                 IN Place VARCHAR(100),
                 IN Email VARCHAR(255),
@@ -48,14 +49,22 @@ return new class extends Migration
                 Streetname = Streetname,
                 Housenumber = Housenumber,
                 ZipCode = ZipCode,
-                Place = Place
+                Place = Place,
+                Addition = Addition
                 where id = ContactsID;
 
-                update Users set
-                Email = Email,
-                Password = Password,
-                Name = SuppliersName
-                where id = UserID;
+                IF Password IS NOT NULL THEN
+                    update Users set
+                    Email = Email,
+                    Password = Password,
+                    Name = SuppliersName
+                    where id = UserID;
+                ELSE
+                    update Users set
+                    Email = Email,
+                    Name = SuppliersName
+                    where id = UserID;
+                END IF;
 
                 end
 

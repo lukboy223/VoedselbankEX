@@ -25,6 +25,7 @@ return new class extends Migration
             CON.PhoneNumber,
             CON.Streetname,
             CON.Housenumber,
+            CON.Addition,
             CON.ZipCode,
             CON.Place,
             USR.Email,

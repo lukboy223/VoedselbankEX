@@ -20,6 +20,7 @@ return new class extends Migration
     Housenumber VARCHAR(5) NOT NULL,
     Zipcode VARCHAR(6) NOT NULL,
     Place VARCHAR(150) NOT NULL,
+    Addition VARCHAR(10) DEFAULT NULL,
     PhoneNumber VARCHAR(10) NOT NULL UNIQUE,
     IsActive BIT NOT NULL DEFAULT 1,
     Created_at DATETIME(6) NOT NULL DEFAULT NOW(6),

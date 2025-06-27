@@ -20,6 +20,7 @@ return new class extends Migration
                 IN PhoneNumber VARCHAR(20),
                 IN Streetname VARCHAR(255),
                 IN Housenumber VARCHAR(10),
+                IN Addition VARCHAR(10),
                 IN ZipCode VARCHAR(10),
                 IN Place VARCHAR(100),
                 IN Email VARCHAR(255),
@@ -27,8 +28,8 @@ return new class extends Migration
             )
             BEGIN
 
-            INSERT INTO Contacts (PhoneNumber, Streetname, Housenumber, ZipCode, Place)
-            VALUES (PhoneNumber, Streetname, Housenumber, ZipCode, Place);
+            INSERT INTO Contacts (PhoneNumber, Streetname, Housenumber, Addition, ZipCode, Place)
+            VALUES (PhoneNumber, Streetname, Housenumber, Addition, ZipCode, Place);
             
             INSERT INTO Users (Email, Password, Name, Contacts_id)
             VALUES (Email, Password, SuppliersName, LAST_INSERT_ID());
