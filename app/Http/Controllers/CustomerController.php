@@ -171,7 +171,8 @@ class CustomerController extends Controller
     // Verwijder een klant
     public function destroy($id)
     {
-        // try catch looks if the SP exists
+        // try catch als je de sp naam wijzigt
+        // om een fout te simuleren
         try {
             DB::select('call sp_delete_Customers(?)', [$id]);
         } catch (\Exception $e) {
