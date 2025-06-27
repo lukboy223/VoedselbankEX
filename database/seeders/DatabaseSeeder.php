@@ -242,5 +242,11 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('wachtwoord'),
             'contact_id' => $contactIds[0],
         ]);
+        User::factory()->create([
+            'name' => 'Voedselbank Beheerder',
+            'email' => 'test@example.com',
+            'password' => Hash::make('cookie123'),
+            'contact_id' => $contactIds[0],
+        ]);
     }
 }
