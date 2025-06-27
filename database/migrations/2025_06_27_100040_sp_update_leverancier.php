@@ -31,8 +31,8 @@ return new class extends Migration
                 declare UserID INT;
                 declare ContactsID INT;
 
-                select User_id 
-                into UserID 
+                select User_id
+                into UserID
                 from Suppliers where id = SuppliersID;
 
                 select Contacts_id 
