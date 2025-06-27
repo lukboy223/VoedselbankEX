@@ -34,7 +34,7 @@ return new class extends Migration
             inner join Contacts as CON 
             on USR.Contacts_id = CON.id
 
-            inner join shipments as SHI
+            left join shipments as SHI
             on SUP.id = SHI.Suppliers_id
 
             group by SUP.id

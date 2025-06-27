@@ -66,7 +66,7 @@
                                     <span class="font-medium text-[#4F4F4F]">Laatste leverdatum:</span>
                                     <span class="ml-2">
                                         @if($supplier->LastShipmentDate)
-                                            {{ \Carbon\Carbon::parse($supplier->LastShipmentDate)->format('d-m-Y') }}
+                                            {{$supplier->LastShipmentDate}}
                                         @else
                                             Geen leveringen
                                         @endif

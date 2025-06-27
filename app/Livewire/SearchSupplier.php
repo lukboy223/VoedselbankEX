@@ -24,7 +24,7 @@ class SearchSupplier extends Component
 
             $this->results = Supplier::join('users', 'suppliers.user_id', '=', 'users.id')
                 ->join('contacts', 'users.contacts_id', '=', 'contacts.id')
-                ->join('shipments', 'suppliers.id', '=', 'shipments.suppliers_id')
+                ->leftJoin('shipments', 'suppliers.id', '=', 'shipments.suppliers_id')
                 ->groupBy('suppliers.id', 'suppliers.SuppliersName', 'contacts.PhoneNumber', 'suppliers.ContactsPersonName')
                 ->select('suppliers.id', 'suppliers.SuppliersName', 'contacts.PhoneNumber', 'suppliers.ContactsPersonName', DB::raw('MAX(shipments.DateDelivery) as LastShipmentDate'))
                 ->where('suppliers.SuppliersName', 'like', '%' . $this->searchText . '%')
