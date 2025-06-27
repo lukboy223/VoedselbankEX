@@ -68,27 +68,39 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'GezinsNaam' => 'required|string|max:100',
-            'Streetname' => 'required|string|max:100',
+            'Streetname' => 'required|string|max:255',
             'Housenumber' => 'required|string|max:10',
+            'Place' => 'required|string|max:255',
             'Zipcode' => 'required|string|max:10',
-            'Place' => 'required|string|max:100',
+            'GezinsNaam' => 'required|string|max:255',
+            'AmountAdults' => 'required|integer|min:0',
+            'AmountChildren' => 'required|integer|min:0',
+            'Amountbabies' => 'required|integer|min:0',
+            'Wishes' => 'nullable|string|max:500',
             'PhoneNumber' => 'required|string|max:20',
-            'Email' => 'required|email|max:255|unique:users,email',
-            // 'IsActive' => 'required|boolean',
+            'Email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed|min:6',
         ]);
 
         try {
-            DB::select('CALL sp_create_Customer(?, ?, ?, ?, ?, ?, ?, ?)', [
+            DB::select('CALL sp_create_Customer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                 $validated['GezinsNaam'],
                 $validated['Streetname'],
                 $validated['Housenumber'],
+                $validated['toevoeging'] ?? null,
                 $validated['Zipcode'],
                 $validated['Place'],
                 $validated['PhoneNumber'],
                 $validated['Email'],
-                // $validated['IsActive'],
+                bcrypt($request->input('password')),
+                $validated['AmountAdults'] ?? 0,
+                $validated['AmountChildren'] ?? 0,
+                $validated['AmountBabies'] ?? 0,
+                $validated['Wishes'] ?? null,
+                $validated['IsActive'] ?? 1,
             ]);
+
+
 
             return redirect()->route('customers.index')
                 ->with('success', "Klant succesvol toegevoegd: {$validated['GezinsNaam']}");

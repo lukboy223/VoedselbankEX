@@ -1,10 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
-
 
 return new class extends Migration
 {
@@ -13,41 +10,58 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // DROP bestaande procedures als ze bestaan
-        DB::unprepared('DROP PROCEDURE IF EXISTS sp_create_Customer;');
-
-        // Stored Procedure om nieuwe klant aan te maken
         DB::unprepared('
-        CREATE PROCEDURE sp_create_Customer(
-            IN p_GezinsNaam VARCHAR(100),
-            IN p_Streetname VARCHAR(100),
-            IN p_Housenumber VARCHAR(10),
-            IN p_Zipcode VARCHAR(10),
-            IN p_Place VARCHAR(100),
-            IN p_PhoneNumber VARCHAR(20),
-            IN p_Email VARCHAR(255),
-            IN p_IsActive BOOLEAN
-        )
-        BEGIN
-            DECLARE contact_id INT;
-            DECLARE user_id INT;
+            DROP PROCEDURE IF EXISTS sp_create_Customers;
+            CREATE PROCEDURE sp_create_Customers(
+                IN p_GezinsNaam VARCHAR(150),
+                IN p_AmountAdults TINYINT,
+                IN p_AmoundChilderen TINYINT,
+                IN p_Amountbabies TINYINT,
+                IN p_Wishes TEXT,
+                IN p_Note VARCHAR(255),
+                IN p_PhoneNumber VARCHAR(20),
+                IN p_Streetname VARCHAR(255),
+                IN p_Housenumber VARCHAR(10),
+                IN p_ZipCode VARCHAR(10),
+                IN p_Place VARCHAR(100),
+                IN p_Email VARCHAR(255),
+                IN p_Password VARCHAR(255)
+            )
+            BEGIN
+                -- Voeg eerst contactgegevens toe
+                INSERT INTO Contacts (PhoneNumber, Streetname, Housenumber, Zipcode, Place)
+                VALUES (p_PhoneNumber, p_Streetname, p_Housenumber, p_ZipCode, p_Place);
 
-            -- Insert contact info
-            INSERT INTO Contacts (Streetname, Housenumber, Zipcode, Place, PhoneNumber)
-            VALUES (p_Streetname, p_Housenumber, p_Zipcode, p_Place, p_PhoneNumber);
+                -- Voeg daarna gebruiker toe met verwijzing naar laatst ingevoerde contact
+                INSERT INTO Users (email, password, Contacts_id)
+                VALUES (p_Email, p_Password, LAST_INSERT_ID());
 
-            SET contact_id = LAST_INSERT_ID();
+                -- Voeg daarna klant toe met verwijzing naar laatst ingevoerde user
+                INSERT INTO Customers (
+                    User_id, GezinsNaam, AmountAdults, AmoundChilderen, Amountbabies,
+                    Wishes, IsActive, Created_at, Updated_at, Note
+                )
+                VALUES (
+                    LAST_INSERT_ID(),
+                    p_GezinsNaam,
+                    p_AmountAdults,
+                    p_AmoundChilderen,
+                    p_Amountbabies,
+                    p_Wishes,
+                    1,
+                    NOW(6),
+                    NOW(6),
+                    p_Note
+                );
+            END
+        ');
+    }
 
-            -- Insert user
-            INSERT INTO users (email, Contacts_id)
-            VALUES (p_Email, contact_id);
-
-            SET user_id = LAST_INSERT_ID();
-
-            -- Insert customer
-            INSERT INTO Customers (GezinsNaam, User_id, IsActive)
-            VALUES (p_GezinsNaam, user_id, p_IsActive);
-        END
-    ');
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        DB::unprepared('DROP PROCEDURE IF EXISTS sp_create_Customers;');
     }
 };
