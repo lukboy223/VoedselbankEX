@@ -13,8 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        drop table if exists Product;
-        CREATE TABLE Product (
+        drop table if exists Products;
+        CREATE TABLE Products (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255) NOT NULL,
     Barcode VARCHAR(100) NOT NULL UNIQUE,
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product');
+        Schema::dropIfExists('Products');
     }
 };
