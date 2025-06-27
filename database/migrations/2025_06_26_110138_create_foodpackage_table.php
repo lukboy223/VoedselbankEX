@@ -13,10 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        drop table if exists FoodPackage;
-        CREATE TABLE FoodPackage (
+        drop table if exists FoodPackages;
+        CREATE TABLE FoodPackages (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Customer_id INT UNSIGNED NOT NULL,
+    Customers_id INT UNSIGNED NOT NULL,
     PackageNumber VARCHAR(50) NOT NULL UNIQUE,
     DateOfCreation DATE NOT NULL,
     DateOfDispatch DATE NOT NULL,
@@ -24,7 +24,7 @@ return new class extends Migration
     Created_at DATETIME(6) NOT NULL DEFAULT NOW(6),
     Updated_at DATETIME(6) NOT NULL DEFAULT NOW(6),
     Note VARCHAR(255) DEFAULT NULL,
-    FOREIGN KEY (Customer_id) REFERENCES Customer(id)
+    FOREIGN KEY (Customers_id) REFERENCES Customers(id)
 );
         ');
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('foodpackage');
+        Schema::dropIfExists('FoodPackages');
     }
 };

@@ -2,10 +2,26 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CustomerController;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+// Klantenoverzicht route
+Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+// create klant route
+// Deze route toont een formulier om een nieuwe klant aan te maken
+Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
+Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+// Edit klant route
+Route::get('/customers/edit/{id}', [CustomerController::class, 'edit'])->name('customers.edit');
+Route::patch('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
+// Delete klant route
+Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
