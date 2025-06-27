@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        drop table if exists Contactss;
+        drop table if exists Contacts;
         CREATE TABLE Contacts (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Streetname VARCHAR(150) NOT NULL,

@@ -62,6 +62,8 @@ class DatabaseSeeder extends Seeder
             ['User_id' => $userIds[2], 'GezinsNaam' => 'Familie Bakker', 'AmountAdults' => 2, 'AmoundChilderen' => 2, 'Amountbabies' => 0, 'Wishes' => 'Geen noten graag'],
             ['User_id' => $userIds[3], 'GezinsNaam' => 'Familie Smit', 'AmountAdults' => 1, 'AmoundChilderen' => 1, 'Amountbabies' => 1, 'Wishes' => 'Vegetarische Productsen'],
             ['User_id' => $userIds[4], 'GezinsNaam' => 'Familie van der Berg', 'AmountAdults' => 2, 'AmoundChilderen' => 3, 'Amountbabies' => 0, 'Wishes' => 'Halal Productsen'],
+            ['User_id' => $userIds[0], 'GezinsNaam' => 'Familie de Vries', 'AmountAdults' => 3, 'AmoundChilderen' => 1, 'Amountbabies' => 0, 'Wishes' => 'Glutenvrije producten'],
+            ['User_id' => $userIds[1], 'GezinsNaam' => 'Familie Jansen', 'AmountAdults' => 2, 'AmoundChilderen' => 2, 'Amountbabies' => 1, 'Wishes' => 'Lactosevrije producten'],
         ];
 
         foreach ($Customerss as $Customers) {
@@ -78,6 +80,8 @@ class DatabaseSeeder extends Seeder
             ['User_id' => $userIds[5], 'SuppliersName' => 'Albert Heijn Distributie', 'ContactsPersonName' => 'Henk Visser'],
             ['User_id' => $userIds[6], 'SuppliersName' => 'Jumbo Groothandel', 'ContactsPersonName' => 'Sophie Mulder'],
             ['User_id' => $userIds[7], 'SuppliersName' => 'Lokale Bakkerij De Korenschoof', 'ContactsPersonName' => 'Tom van Dijk'],
+            ['User_id' => $userIds[0], 'SuppliersName' => 'Plus Distributie Center', 'ContactsPersonName' => 'Jan de Vries'],
+            ['User_id' => $userIds[1], 'SuppliersName' => 'Biologische Boerderij Groen', 'ContactsPersonName' => 'Maria Jansen'],
         ];
 
         foreach ($Supplierss as $Suppliers) {
@@ -137,6 +141,7 @@ class DatabaseSeeder extends Seeder
             ['Allergies_id' => $AllergiesIds[2], 'Products_id' => $ProductsIds[0]], // Gluten - Brood
             ['Allergies_id' => $AllergiesIds[1], 'Products_id' => $ProductsIds[7]], // Lactose - Kaas
             ['Allergies_id' => $AllergiesIds[2], 'Products_id' => $ProductsIds[3]], // Gluten - Spaghetti
+            ['Allergies_id' => $AllergiesIds[3], 'Products_id' => $ProductsIds[0]], // Eieren - Brood
         ];
 
         foreach ($AllergiesProductsLinks as $link) {
@@ -154,7 +159,9 @@ class DatabaseSeeder extends Seeder
             ['Suppliers_id' => $SuppliersIds[1], 'Products_id' => $ProductsIds[2], 'Amount' => 25, 'DateDelivery' => '2025-06-22'],
             ['Suppliers_id' => $SuppliersIds[1], 'Products_id' => $ProductsIds[3], 'Amount' => 40, 'DateDelivery' => '2025-06-23'],
             ['Suppliers_id' => $SuppliersIds[2], 'Products_id' => $ProductsIds[0], 'Amount' => 20, 'DateDelivery' => '2025-06-24'],
-            ['Suppliers_id' => $SuppliersIds[0], 'Products_id' => $ProductsIds[4], 'Amount' => 15, 'DateDelivery' => '2025-06-25'],
+            ['Suppliers_id' => $SuppliersIds[2], 'Products_id' => $ProductsIds[4], 'Amount' => 15, 'DateDelivery' => '2025-06-25'],
+            ['Suppliers_id' => $SuppliersIds[3], 'Products_id' => $ProductsIds[5], 'Amount' => 35, 'DateDelivery' => '2025-06-26'],
+            ['Suppliers_id' => $SuppliersIds[4], 'Products_id' => $ProductsIds[2], 'Amount' => 45, 'DateDelivery' => '2025-06-27'],
         ];
 
         foreach ($shipmentss as $shipments) {
@@ -193,6 +200,8 @@ class DatabaseSeeder extends Seeder
             ['Customers_id' => $CustomersIds[0], 'PackageNumber' => 'VP-2025-001', 'DateOfCreation' => '2025-06-26', 'DateOfDispatch' => '2025-06-27'],
             ['Customers_id' => $CustomersIds[1], 'PackageNumber' => 'VP-2025-002', 'DateOfCreation' => '2025-06-26', 'DateOfDispatch' => '2025-06-28'],
             ['Customers_id' => $CustomersIds[2], 'PackageNumber' => 'VP-2025-003', 'DateOfCreation' => '2025-06-27', 'DateOfDispatch' => '2025-06-29'],
+            ['Customers_id' => $CustomersIds[3], 'PackageNumber' => 'VP-2025-004', 'DateOfCreation' => '2025-06-28', 'DateOfDispatch' => '2025-06-30'],
+            ['Customers_id' => $CustomersIds[4], 'PackageNumber' => 'VP-2025-005', 'DateOfCreation' => '2025-06-29', 'DateOfDispatch' => '2025-07-01'],
         ];
 
         foreach ($FoodPackagess as $package) {
@@ -225,6 +234,20 @@ class DatabaseSeeder extends Seeder
             ['FoodPackages_id' => $FoodPackagesIds[2], 'Products_id' => $ProductsIds[2]], // Bananen
             ['FoodPackages_id' => $FoodPackagesIds[2], 'Products_id' => $ProductsIds[3]], // Spaghetti
             ['FoodPackages_id' => $FoodPackagesIds[2], 'Products_id' => $ProductsIds[8]], // Aardappelen
+
+            // Pakket 4 - Familie de Vries (glutenvrij)
+            ['FoodPackages_id' => $FoodPackagesIds[3], 'Products_id' => $ProductsIds[2]], // Bananen
+            ['FoodPackages_id' => $FoodPackagesIds[3], 'Products_id' => $ProductsIds[4]], // Gehakt
+            ['FoodPackages_id' => $FoodPackagesIds[3], 'Products_id' => $ProductsIds[8]], // Aardappelen
+            ['FoodPackages_id' => $FoodPackagesIds[3], 'Products_id' => $ProductsIds[9]], // Rijst
+            ['FoodPackages_id' => $FoodPackagesIds[3], 'Products_id' => $ProductsIds[6]], // Appelsap
+
+            // Pakket 5 - Familie Jansen (lactosevrij)
+            ['FoodPackages_id' => $FoodPackagesIds[4], 'Products_id' => $ProductsIds[0]], // Brood
+            ['FoodPackages_id' => $FoodPackagesIds[4], 'Products_id' => $ProductsIds[2]], // Bananen
+            ['FoodPackages_id' => $FoodPackagesIds[4], 'Products_id' => $ProductsIds[3]], // Spaghetti
+            ['FoodPackages_id' => $FoodPackagesIds[4], 'Products_id' => $ProductsIds[5]], // Tomatensoep
+            ['FoodPackages_id' => $FoodPackagesIds[4], 'Products_id' => $ProductsIds[9]], // Rijst
         ];
 
         foreach ($ProductsFoodPackagesLinks as $link) {

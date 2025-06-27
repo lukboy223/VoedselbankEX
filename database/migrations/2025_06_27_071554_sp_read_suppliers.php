@@ -13,27 +13,36 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        drop procedure if exists sp_read_Supplierss;
-        CREATE PROCEDURE sp_read_Supplierss(
+        drop procedure if exists sp_read_Suppliers;
+        CREATE PROCEDURE sp_read_Suppliers(
         IN givLIMIT int, 
         IN givOFFSET int
         )
         begin
             SELECT 
-                s.id, 
-                s.Name, 
-                s.IsActive, 
-                s.Created_at, 
-                s.Updated_at, 
-                s.Note,
-                c.Name AS ContactsName,
-                c.Email AS ContactsEmail,
-                c.Phone AS ContactsPhone
-            FROM Suppliers s
-            LEFT JOIN Contacts c ON s.Contacts_id = c.id
-            WHERE s.IsActive = 1
-            ORDER BY s.Name ASC
-            LIMIT givLIMIT OFFSET givOFFSET;
+            SUP.id,
+            SUP.SuppliersName,
+            SUP.ContactsPersonName,
+            CON.PhoneNumber,
+            max(SHI.DateDelivery) as LastShipmentDate
+
+            from Suppliers as SUP
+
+            inner join Users as USR
+            on SUP.User_id = USR.id
+
+            inner join Contacts as CON 
+            on USR.Contacts_id = CON.id
+
+            inner join shipments as SHI
+            on SUP.id = SHI.Suppliers_id
+
+            group by SUP.id
+
+            ORDER BY SUP.SuppliersName ASC
+
+            LIMIT givLIMIT 
+            OFFSET givOFFSET;
         end
 
         ');
