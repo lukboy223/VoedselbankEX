@@ -23,7 +23,7 @@ class CustomerController extends Controller
 
             // Probeer stored procedure uit te voeren
             // voor een unhappy path, gebruik een try-catch en verander de naam van de stored procedure
-            $customers = DB::select('CALL sp_read_Custosmers(?, ?)', [$perPage, $offset]);
+            $customers = DB::select('CALL sp_read_Customers(?, ?)', [$perPage, $offset]);
 
             // Zet resultaat om naar paginator
             $customers = new LengthAwarePaginator(
@@ -51,7 +51,53 @@ class CustomerController extends Controller
                 ]
             );
         }
-
+        // Geef de view weer met de klanten
         return view('customers.index', ['customers' => $customers]);
+    }
+
+    // Toon formulier voor het aanmaken van een nieuwe klant
+    public function create()
+    {
+        return view('customers.create');
+    }
+
+    // Sla de nieuwe klant op in de database
+    // Gebruik een stored procedure om de klant aan te maken
+    // Zorg ervoor dat de validatie correct is ingesteld
+    // en dat de juiste velden worden gevalideerd
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'GezinsNaam' => 'required|string|max:100',
+            'Streetname' => 'required|string|max:100',
+            'Housenumber' => 'required|string|max:10',
+            'Zipcode' => 'required|string|max:10',
+            'Place' => 'required|string|max:100',
+            'PhoneNumber' => 'required|string|max:20',
+            'Email' => 'required|email|max:255|unique:users,email',
+            // 'IsActive' => 'required|boolean',
+        ]);
+
+        try {
+            DB::select('CALL sp_create_Customer(?, ?, ?, ?, ?, ?, ?, ?)', [
+                $validated['GezinsNaam'],
+                $validated['Streetname'],
+                $validated['Housenumber'],
+                $validated['Zipcode'],
+                $validated['Place'],
+                $validated['PhoneNumber'],
+                $validated['Email'],
+                // $validated['IsActive'],
+            ]);
+
+            return redirect()->route('customers.index')
+                ->with('success', "Klant succesvol toegevoegd: {$validated['GezinsNaam']}");
+        } catch (\Exception $e) {
+            Log::error('Fout bij het aanmaken van klant: ' . $e->getMessage());
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Er is een fout opgetreden bij het toevoegen van de klant.');
+        }
     }
 }

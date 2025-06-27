@@ -13,7 +13,10 @@ Route::get('/', function () {
 
 // Klantenoverzicht route
 Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-
+// create klant route
+// Deze route toont een formulier om een nieuwe klant aan te maken
+Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
+Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

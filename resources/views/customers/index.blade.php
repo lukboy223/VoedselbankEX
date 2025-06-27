@@ -62,7 +62,7 @@
         </section>
 
         <div class="w-full flex justify-center my-6">
-            <a href="#" class="bg-[#B5D2AA] text-white text-xl px-6 py-3 rounded shadow">
+            <a href="{{ route('customers.create') }}" class="bg-[#B5D2AA] text-white text-xl px-6 py-3 rounded shadow">
                 Klant toevoegen
             </a>
         </div>
