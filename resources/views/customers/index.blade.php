@@ -72,13 +72,12 @@
                                 <a href="{{ route('customers.edit', $customer->id) }}" class="block bg-[#9BC8F2] text-white rounded px-2 py-1">Wijzigen</a>
                             </td>
                             <td class="p-2 border-t-2 border-l-2 border-[#D0D0D0] text-center">
-                                <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" onsubmit="return confirm('Weet je zeker dat je deze klant wilt verwijderen?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white rounded px-2 py-1">
-                                        Verwijderen
-                                    </button>
-                                </form>
+                                <button type="button"
+                                class="p-1 bg-[#F88080] w-full m-auto block text-center delete-btn"
+                                data-customer-id="{{ $customer->id }}"
+                                data-customer-name="{{ $customer->GezinsNaam }}">
+                                Verwijderen
+                            </button>
                             </td>
 
                         </tr>
@@ -106,7 +105,7 @@
             <div class="flex flex-col">
                 <h2 class="text-xl font-bold mb-4 text-[#4F4F4F]">Leverancier verwijderen</h2>
                 <p class="mb-6 text-gray-700">
-                    Weet je zeker dat je <span id="supplierName" class="font-semibold"></span> wilt verwijderen?
+                    Weet je zeker dat je <span id="customerName" class="font-semibold"></span> wilt verwijderen?
                     Deze actie kan niet ongedaan gemaakt worden.
                 </p>
 
@@ -134,19 +133,19 @@
         const deleteButtons = document.querySelectorAll('.delete-btn');
         const cancelDelete = document.getElementById('cancelDelete');
         const deleteForm = document.getElementById('deleteForm');
-        const supplierNameSpan = document.getElementById('supplierName');
+        const customerNameSpan = document.getElementById('customerName');
 
         // Add click event listeners to all delete buttons
         deleteButtons.forEach(button => {
             button.addEventListener('click', () => {
-                // Get supplier info from data attributes
-                const SupplierId = button.getAttribute('data-supplier-id');
-                const supplierName = button.getAttribute('data-supplier-name');
-                console.log(SupplierId, supplierName);
+                // Get customer info from data attributes
+                const customerId = button.getAttribute('data-customer-id');
+                const customerName = button.getAttribute('data-customer-name');
+                console.log(customerId, customerName);
 
                 // Update modal content
-                supplierNameSpan.textContent = supplierName;
-                deleteForm.action = `/leveranciers/${SupplierId}/delete`;
+                customerNameSpan.textContent = customerName;
+                deleteForm.action = `/customers/${customerId}`;
 
                 // Show modal
                 deleteModal.classList.remove('hidden');

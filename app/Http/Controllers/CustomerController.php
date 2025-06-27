@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-
-
+use Pest\ArchPresets\Custom;
 
 class CustomerController extends Controller
 {
@@ -81,7 +82,7 @@ class CustomerController extends Controller
             'Housenumber' => 'required|string|max:10',
             'Zipcode' => 'required|string|max:20',
             'Place' => 'required|string|max:255',
-            'PhoneNumber' => 'required|string|max:20',
+            'PhoneNumber' => 'required|string|min:10|max:10',
             'email' => 'required|email|max:255',
             'password' => 'required|string|min:6|confirmed', // voorbeeld validatie
         ], $messages);
@@ -104,7 +105,9 @@ class CustomerController extends Controller
 
             return redirect()->route('customers.index')->with('success', 'Klant succesvol toegevoegd.');
         } catch (\Exception $e) {
-            return back()->withErrors(['general' => 'Er is iets misgegaan bij het toevoegen van de klant: ' . $e->getMessage()])->withInput();
+            return back()->withErrors(['general' => 'Er is iets misgegaan bij het toevoegen van de klant'])
+                ->withInput()
+                ->with('error', 'Er is een fout opgetreden bij het toevoegen van de klantgegevens. Probeer het later opnieuw.');
         }
     }
 
@@ -123,6 +126,10 @@ class CustomerController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        $userId = Customer::where('id', $id)->value('User_id');
+        $contactsId = User::where('id', $id)->value('Contacts_id');
+
         $validated = $request->validate([
             'GezinsNaam' => 'required|string|max:255|unique:Customers,GezinsNaam,' . $id,
             'AmountAdults' => 'required|integer|min:0',
@@ -133,7 +140,7 @@ class CustomerController extends Controller
             'Housenumber' => 'required|string|max:10',
             'Zipcode' => 'required|string|max:20',
             'Place' => 'required|string|max:255',
-            'PhoneNumber' => 'required|string|max:20',
+            'PhoneNumber' => 'required|string|min:10|max:10|unique:Contacts,PhoneNumber,' . $contactsId,
             'email' => 'required|email|max:255',
             'password' => 'nullable|string|min:6|confirmed',
         ], [
@@ -159,7 +166,7 @@ class CustomerController extends Controller
 
             return redirect()->route('customers.index')->with('success', 'Klant succesvol bijgewerkt.');
         } catch (\Exception $e) {
-            \Log::error('Fout bij het bijwerken van klant: ' . $e->getMessage());
+            Log::error('Fout bij het bijwerken van klant: ' . $e->getMessage());
 
             // Toon een algemene foutmelding
             return back()->withErrors([
