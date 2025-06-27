@@ -43,7 +43,7 @@
                             
                             <div class="mb-4">
                                 <label for="ContactsPersonName" class="block mb-1">Naam contact persoon</label>
-                                <input type="text" name="ContactsPersonName" id="ContactsPersonName" value="{{ old('ContactsPersonName', $supplier->ContactsPersonName) }}"
+                                <input type="text" name="ContactsPersonName" id="ContactsPersonName" value="{{ old('ContactsPersonName', $supplier->ContactsPersonName) }}" required
                                     class="w-full border-gray-300 rounded-md @error('infix') border-red-500 @enderror">
                                 @error('ContactsPersonName')
                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>

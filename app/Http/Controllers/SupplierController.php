@@ -79,7 +79,7 @@ class SupplierController extends Controller
             'ContactsPersonName' => 'required|string|max:100|regex:/^[a-zA-Z\s]+$/',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'phone' => 'nullable|string|max:10',
+            'phone' => 'nullable|string|max:10|unique:contacts,PhoneNumber',
             'street_name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
             'house_number' => 'required|string|max:10',
             'addition' => 'nullable|string|max:10|regex:/^[a-zA-Z]+$/',
@@ -145,12 +145,13 @@ class SupplierController extends Controller
     {
 
         $userId = Supplier::where('id', $id)->value('user_id');
+        $contactsId = User::where('id', $userId)->value('contacts_id');
         //validate the request
         $request->validate([
             'SuppliersName' => 'required|string|max:100|min:2|regex:/^[a-zA-Z\s]+$/',
             'ContactsPersonName' => 'required|string|max:100|regex:/^[a-zA-Z\s]+$/',
             'email' => 'required|email|max:255|unique:users,email,' . $userId,
-            'phone' => 'nullable|string|max:10',
+            'phone' => 'nullable|string|max:10|unique:contacts,PhoneNumber,' . $contactsId,
             'street_name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
             'house_number' => 'required|string|max:10',
             'addition' => 'nullable|string|max:10|regex:/^[a-zA-Z]+$/',
