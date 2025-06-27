@@ -36,7 +36,7 @@
                     @if($customers->isEmpty())
                     <tr>
                         <td colspan="9" class="bg-[#F88080] text-center py-4">
-                            Geen klanten gevonden.
+                            Geen klanten gevonden, probeer het later opnieuw.
                         </td>
                     </tr>
                     @else

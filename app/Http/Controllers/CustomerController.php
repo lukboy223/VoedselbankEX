@@ -22,7 +22,8 @@ class CustomerController extends Controller
             $total = DB::table('Customers')->where('IsActive', 1)->count();
 
             // Probeer stored procedure uit te voeren
-            $customers = DB::select('CALL sp_read_Customers(?, ?)', [$perPage, $offset]);
+            // voor een unhappy path, gebruik een try-catch en verander de naam van de stored procedure
+            $customers = DB::select('CALL sp_read_Custosmers(?, ?)', [$perPage, $offset]);
 
             // Zet resultaat om naar paginator
             $customers = new LengthAwarePaginator(
